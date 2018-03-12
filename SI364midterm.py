@@ -13,7 +13,7 @@ from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 import requests
 import json
-import twitter_info
+import api_info
 import tweepy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -42,17 +42,17 @@ manager.add_command('db', MigrateCommand)
 # this helper function access the OMDB API and retrieves the plot of the user's movie
 def get_movie_plot(movie_name):
 	movie_name = movie_name.replace(' ', '+')
-	api_key = '9f0092a6'
+	api_key = api_info.movie_key
 	url = 'http://www.omdbapi.com/?apikey={}&t={}&type=movie&plot=short&r=json'.format(api_key,movie_name)
 	data = requests.get(url)
 	json_data = json.loads(data.text)
 	return json_data['Plot']
 # this helper function takes in a movie name, access the twitter api, and returns tweets regarding the movie name
 def get_tweets(movie_name): 
-	consumer_key = twitter_info.consumer_key
-	consumer_secret = twitter_info.consumer_secret
-	access_token = twitter_info.access_token
-	access_token_secret = twitter_info.access_token_secret
+	consumer_key = api_info.consumer_key
+	consumer_secret = api_info.consumer_secret
+	access_token = api_info.access_token
+	access_token_secret = api_info.access_token_secret
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
 	api = tweepy.API(auth, parser=tweepy.parsers.JSONParser()) 
@@ -63,7 +63,7 @@ def get_tweets(movie_name):
 
 # this helper function gets review information from the NYT API
 def get_nyt_review(movie_name):
-	api_key = '98eba02323d11b2615cb90216f95dc76:12:74970859'
+	api_key = api_info.nyt_key
 	movie_name = movie_name.replace(' ','+')
 	movie_name = "'"+movie_name+"'"
 	url = 'http://api.nytimes.com/svc/movies/v2/reviews/search.json?query={}&api-key={}'.format(movie_name,api_key)
