@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<form action="{{ url_for('find_tweets') }}" method="POST">
+    {{ form.movies.label() }}{{ form.movies() }}<br>
+    {{ form.submit() }}
+    {{ form.hidden_tag() }}
+    {% if form.movies.errors %}
+        <ul class="errors">{% for error in form.movies.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
+</form>
+
+<div>
+<h1>Movie Tweets</h1>
+    {% for movie,tweet in movie_dict.items() %}
+	   <h2> {{movie}} </h2>
+       {% if not tweet %}
+       <p> This movie is not saved. Go to the home page and enter it.</p>
+       {% endif %}
+	   {% for tw in tweet %}
+	   <ol> {{tw}} </ol>
+       {% endfor %}
+    {% endfor %} 
+</div>
+
+
+
+
+{% endblock %}

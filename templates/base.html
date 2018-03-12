@@ -1,0 +1,36 @@
+{% block title %}<title>SI364 Midterm</title>{% endblock %}
+
+<head>
+{% block head %} <h1 align='center'> <u>Movie Info Application</u> </h1> {% endblock %}
+</head>
+
+{% block content %}
+<form action="{{ url_for('home') }}" method="POST">
+    {{ form.movies.label() }}{{ form.movies() }}<br>
+    {{ form.submit() }}
+    {{ form.hidden_tag() }}
+</form>
+
+<div>
+{% for message in get_flashed_messages() %} 
+<strong>*** {{ message }} ***</strong>
+{% endfor %}
+</div>
+
+
+{% endblock %}
+
+ {% block nav %} 
+  <body>
+  	<h2> Navigation </h2>
+    <div id="nav">
+        <ul>
+            <li><a href="{{ url_for('all_movies') }}">See All Saved Movies</a></l>
+            <li><a href="{{ url_for('find_tweets') }}">Search for Tweets</a></li>
+            <li><a href="{{ url_for('see_reviews') }}">See New York Times Review </a></li>
+            <li><a href="{{ url_for('home') }}">Go To Home Page </a></li>
+        </ul>
+{% endblock %}
+{% block footer %}
+<p><i> Application written by Cameron Chandra </i></p>
+{% endblock %}

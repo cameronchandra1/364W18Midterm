@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> Movie Reviews - New York Times </h1>
+
+{% for review in reviews %}
+<h2> {{ review['headline'] }} </h2>
+<br> 
+{{ review['review'] }}
+<a href= "{{review['link']}}"> Click here to read full article</a>
+{% endfor %}
+
+{% endblock %}
